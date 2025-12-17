@@ -16,7 +16,7 @@ export default function Home() {
 
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-bold">
-            Next.js + Tailwind CSS + Jotai Starter
+            넥스트 + 테일윈드 + 조타이 스타터 템플릿
           </h1>
           <p className="text-sm text-gray-500">
             This is a starter template initialized with Next.js 15, Tailwind CSS
