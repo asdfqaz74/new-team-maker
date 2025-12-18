@@ -27,22 +27,22 @@ const FormInput = <T extends FieldValues>({
   desc,
 }: FormInputProps<T>) => {
   return (
-    <div className="flex flex-col gap-1 text-white">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col gap-1 w-full text-black">
+      <div className="flex items-center justify-between pb-2">
         {label && (
-          <label htmlFor={name} className="text-sm font-medium">
+          <label htmlFor={name} className="text-sm pl-2.5 font-medium">
             {label}
             {rules?.required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
-        {desc && <span className="text-xs text-gray-300">{desc}</span>}
+        {desc && <span className="text-xs text-gray-600">{desc}</span>}
       </div>
       <input
         id={name}
         type={type}
         placeholder={placeholder}
         {...register(name, rules)}
-        className={`px-3 py-2 border rounded-lg outline-none transition-colors
+        className={`px-3 py-3 border rounded-xl outline-none transition-colors
           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
           ${error ? "border-red-500" : "border-gray-300"}`}
       />
