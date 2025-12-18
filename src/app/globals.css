@@ -34,3 +34,36 @@ body {
   color: var(--foreground);
   font-family: var(--font-serif), Arial, Helvetica, sans-serif;
 }
+
+/* 커스텀 유틸리티 클래스 */
+@layer utilities {
+  .interactive-scale {
+    @apply transition-transform duration-500 hover:scale-110 focus-visible:scale-110;
+  }
+
+  .interactive-opacity {
+    @apply transition-opacity duration-300 hover:opacity-80 focus-visible:opacity-80;
+  }
+}
+
+/* 커스텀 컴포넌트 클래스 */
+@layer components {
+  .hover-underline-animation {
+    @apply relative;
+  }
+
+  .hover-underline-animation::after {
+    content: "";
+    @apply absolute left-0 -bottom-1 w-full h-0.5 bg-current;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease-in-out;
+  }
+
+  .hover-underline-animation:hover::after,
+  .hover-underline-animation:focus-visible::after,
+  .hover-underline-animation:focus-within::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
