@@ -30,7 +30,7 @@ const FormInput = <T extends FieldValues>({
     <div className="flex flex-col gap-1 w-full text-black">
       <div className="flex items-center justify-between pb-2">
         {label && (
-          <label htmlFor={name} className="text-sm pl-2.5 font-medium">
+          <label htmlFor={name} className="text-sm pl-2.5 font-bold">
             {label}
             {rules?.required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -42,7 +42,7 @@ const FormInput = <T extends FieldValues>({
         type={type}
         placeholder={placeholder}
         {...register(name, rules)}
-        className={`px-3 py-3 border rounded-xl outline-none transition-colors
+        className={`px-3 py-3 border border-gray-600 rounded-xl outline-none transition-colors
           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
           ${error ? "border-red-500" : "border-gray-300"}`}
       />

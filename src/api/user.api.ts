@@ -15,4 +15,5 @@ export const logout = () => api.post("/users/logout");
 /* -------------------------------------------- */
 /*                     회원가입                     */
 /* -------------------------------------------- */
-export const signup = (data: SignUpRequest) => api.post("/users/signup", data);
+export const signup = (data: SignUpRequest) =>
+  api.post("/users/register", data);
