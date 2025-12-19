@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import SignUp from "../../components/form/SignUp";
+import SignUp from "@/components/form/SignUp";
 
 const meta = {
   title: "Form/SignUp",
@@ -7,6 +7,12 @@ const meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: "/signup",
+      },
+    },
   },
 } satisfies Meta<typeof SignUp>;
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { isLoggedInAtom, userInfoAtom } from "@/store/user.store";
 import { useAtom } from "jotai";
 import Image from "next/image";
@@ -36,16 +38,18 @@ const Login = () => {
             />
           </Link>
         )}
-        <button
-          type="button"
-          className={`px-2 py-1 border font-bold rounded-4xl transition-colors cursor-pointer ${
-            isLoggedIn
-              ? "bg-red-300 border-red-400 hover:bg-red-400 focus-visible:bg-red-400"
-              : "bg-blue-300 border-blue-400 hover:bg-blue-400 focus-visible:bg-blue-400"
-          }`}
-        >
-          {isLoggedIn ? "로그아웃" : "로그인"}
-        </button>
+        <Link href="/signin">
+          <button
+            type="button"
+            className={`px-2 py-1 border font-bold rounded-4xl transition-colors cursor-pointer ${
+              isLoggedIn
+                ? "bg-red-300 border-red-400 hover:bg-red-400 focus-visible:bg-red-400"
+                : "bg-blue-300 border-blue-400 hover:bg-blue-400 focus-visible:bg-blue-400"
+            }`}
+          >
+            {isLoggedIn ? "로그아웃" : "로그인"}
+          </button>
+        </Link>
       </div>
     </div>
   );

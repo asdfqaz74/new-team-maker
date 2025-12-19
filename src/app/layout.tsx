@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Snackbar from "@/components/common/Snackbar";
+import Header from "@/components/layout/Header";
+import ClientProvider from "@/components/provider/ClientProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,8 @@ export default function RootLayout({
   return (
     <html lang="ko-kr">
       <body className={`antialiased`}>
-        {children}
-        <Snackbar />
+        <Header />
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );

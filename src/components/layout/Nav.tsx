@@ -1,3 +1,5 @@
+"use client";
+
 import { isLoggedInAtom } from "@/store/user.store";
 import { useAtom } from "jotai";
 import Link from "next/link";
