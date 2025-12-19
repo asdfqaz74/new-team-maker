@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Login from "../Login";
+import Login from "./Login";
 import Nav from "./Nav";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -10,7 +10,7 @@ const Header = () => {
   const pathname = usePathname();
 
   // signup 경로에서는 Header 숨김
-  if (pathname.includes("signup")) {
+  if (pathname.includes("signup") || pathname.includes("signin")) {
     return null;
   }
 

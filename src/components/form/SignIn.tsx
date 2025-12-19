@@ -1,8 +1,14 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import FormInput from "./FormInput";
 import { useSnackbar } from "@/hooks/useSnackbar";
 import { login } from "@/api/user.api";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAtom } from "jotai";
+import { userInfoAtom } from "@/store/user.store";
 
 type SignInForm = {
   userId: string;
@@ -10,18 +16,29 @@ type SignInForm = {
 };
 
 const SignIn = () => {
+  const [, setUserInfo] = useAtom(userInfoAtom);
+
   const { success, error: showError } = useSnackbar();
+
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<SignInForm>({ mode: "onChange" });
 
   const onSubmit = async (data: SignInForm) => {
     try {
-      await login(data);
-      success("로그인에 성공했습니다!");
+      const response = await login(data);
+      console.log(response);
+      const userInfo = response.user;
+
+      if (userInfo) {
+        setUserInfo(userInfo);
+        success("로그인에 성공했습니다!");
+        router.push("/");
+      }
     } catch (err) {
       const error = err as AxiosError<ApiErrorResponse>;
       console.error(error.response?.data.error.code);
@@ -55,16 +72,25 @@ const SignIn = () => {
         />
         <button
           type="submit"
-          disabled={!isValid}
-          className={`mt-2 px-4 py-2 text-white font-bold rounded-lg transition-colors  ${
-            !isValid
+          disabled={!isValid || isSubmitting}
+          className={`mt-2 px-4 py-2 text-white font-bold rounded-lg transition-colors ${
+            !isValid || isSubmitting
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
-          로그인
+          {isSubmitting ? "로그인 중..." : "로그인"}
         </button>
       </form>
+      <div className="flex justify-end gap-2">
+        <span>회원이 아니신가요?</span>
+        <Link
+          href="/signup"
+          className="underline decoration-blue-600 underline-offset-4 font-bold text-blue-600 hover:text-blue-800 transition-colors"
+        >
+          회원가입
+        </Link>
+      </div>
     </div>
   );
 };

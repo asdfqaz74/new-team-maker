@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Provider } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
-import Login from "../components/Login";
+import Login from "../components/layout/Login";
 import { userInfoAtom } from "@/store/user.store";
 import { LoginInfoItem } from "@/types/user";
 

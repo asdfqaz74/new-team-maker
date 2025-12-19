@@ -15,7 +15,10 @@ export interface LoginInfoItem {
   email: string;
 }
 
-export type LoginResponse = ResponseStructure<LoginInfoItem>;
+// 실제 API 응답 구조: { user: { ... } }
+export interface LoginResponse {
+  user: LoginInfoItem;
+}
 
 /* -------------------------------------------- */
 /*                     회원가입                     */

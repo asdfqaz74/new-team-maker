@@ -16,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="ko-kr">
       <body className={`antialiased`}>
-        <Header />
-        <ClientProvider>{children}</ClientProvider>
+        <ClientProvider>
+          <Header />
+          {children}
+        </ClientProvider>
       </body>
     </html>
   );
