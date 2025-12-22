@@ -54,6 +54,12 @@ body {
     @apply relative;
   }
 
+  /* active 상태일 때 underline 유지 */
+  .hover-underline-animation.active-link::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
   .hover-underline-animation::after {
     content: "";
     @apply absolute left-0 -bottom-1 w-full h-0.5 bg-current;

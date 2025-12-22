@@ -3,6 +3,7 @@
 import { isLoggedInAtom, isAuthLoadingAtom } from "@/store/user.store";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Nav = () => {
   const isLoggedIn = useAtomValue(isLoggedInAtom);
@@ -10,32 +11,63 @@ const Nav = () => {
 
   // 인증 확인 중에는 로그인 관련 메뉴 숨김 (깜빡임 방지)
   const showAuthMenu = !isAuthLoading && isLoggedIn;
+  const path = usePathname();
+
+  const currentPath = path || "/";
 
   return (
     <nav className="text-white">
       <ul className="flex gap-8 text-2xl font-bold">
-        <li className="hover-underline-animation cursor-pointer">
+        <li
+          className={`hover-underline-animation cursor-pointer ${
+            currentPath === "/" ? "active-link" : ""
+          }`}
+        >
           <Link href="/">홈</Link>
         </li>
-        <li className="hover-underline-animation cursor-pointer">
-          <Link href="">팀메이커</Link>
+        <li
+          className={`hover-underline-animation cursor-pointer ${
+            currentPath === "/team-maker" ? "active-link" : ""
+          }`}
+        >
+          <Link href="/team-maker">팀메이커</Link>
         </li>
         {showAuthMenu && (
-          <li className="hover-underline-animation cursor-pointer">
+          <li
+            className={`hover-underline-animation cursor-pointer ${
+              currentPath === "/statistics" ? "active-link" : ""
+            }`}
+          >
             <Link href="">통계</Link>
           </li>
         )}
-        <li className="hover-underline-animation cursor-pointer">
+        <li
+          className={`hover-underline-animation cursor-pointer ${
+            currentPath === "/news" ? "active-link" : ""
+          }`}
+        >
           <Link href="">뉴스</Link>
         </li>
-        <li className="hover-underline-animation cursor-pointer">
+        <li
+          className={`hover-underline-animation cursor-pointer ${
+            currentPath === "/patch-notes" ? "active-link" : ""
+          }`}
+        >
           <Link href="">패치노트</Link>
         </li>
-        <li className="hover-underline-animation cursor-pointer">
+        <li
+          className={`hover-underline-animation cursor-pointer ${
+            currentPath === "/contact" ? "active-link" : ""
+          }`}
+        >
           <Link href="">문의</Link>
         </li>
         {showAuthMenu && (
-          <li className="hover-underline-animation cursor-pointer">
+          <li
+            className={`hover-underline-animation cursor-pointer ${
+              currentPath === "/my-page" ? "active-link" : ""
+            }`}
+          >
             <Link href="">마이페이지</Link>
           </li>
         )}
