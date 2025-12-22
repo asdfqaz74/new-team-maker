@@ -13,11 +13,16 @@ export interface LoginInfoItem {
   realName: string;
   userId: string;
   email: string;
+  subAccount?: {
+    isEnabled: boolean;
+  };
 }
 
-// 실제 API 응답 구조: { user: { ... } }
+// 실제 API 응답 구조: { success, message, data: { ...user정보 } }
 export interface LoginResponse {
-  user: LoginInfoItem;
+  success: boolean;
+  message: string;
+  data: LoginInfoItem;
 }
 
 /* -------------------------------------------- */

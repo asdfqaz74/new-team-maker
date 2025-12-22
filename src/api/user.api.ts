@@ -13,6 +13,11 @@ export const login = (data: LoginRequest) =>
 export const logout = () => api.post("/users/logout");
 
 /* -------------------------------------------- */
+/*                     로그인확인                    */
+/* -------------------------------------------- */
+export const me = () => api.get<LoginResponse>("/users/me");
+
+/* -------------------------------------------- */
 /*                     회원가입                     */
 /* -------------------------------------------- */
 export const signup = (data: SignUpRequest) =>

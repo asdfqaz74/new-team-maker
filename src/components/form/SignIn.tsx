@@ -7,8 +7,8 @@ import { login } from "@/api/user.api";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAtom } from "jotai";
-import { userInfoAtom } from "@/store/user.store";
+import { useSetAtom } from "jotai";
+import { userInfoAtom, isAuthLoadingAtom } from "@/store/user.store";
 
 type SignInForm = {
   userId: string;
@@ -16,7 +16,8 @@ type SignInForm = {
 };
 
 const SignIn = () => {
-  const [, setUserInfo] = useAtom(userInfoAtom);
+  const setUserInfo = useSetAtom(userInfoAtom);
+  const setAuthLoading = useSetAtom(isAuthLoadingAtom);
 
   const { success, error: showError } = useSnackbar();
 
@@ -31,13 +32,15 @@ const SignIn = () => {
   const onSubmit = async (data: SignInForm) => {
     try {
       const response = await login(data);
-      console.log(response);
-      const userInfo = response.user;
+      const userInfo = response.data;
 
       if (userInfo) {
         setUserInfo(userInfo);
+        setAuthLoading(false); // 인증 완료 표시
         success("로그인에 성공했습니다!");
         router.push("/");
+      } else {
+        showError("로그인 응답에 사용자 정보가 없습니다.");
       }
     } catch (err) {
       const error = err as AxiosError<ApiErrorResponse>;

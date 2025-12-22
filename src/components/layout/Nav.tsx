@@ -1,15 +1,15 @@
 "use client";
 
-import { isLoggedInAtom, isHydratedAtom } from "@/store/user.store";
+import { isLoggedInAtom, isAuthLoadingAtom } from "@/store/user.store";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 
 const Nav = () => {
   const isLoggedIn = useAtomValue(isLoggedInAtom);
-  const isHydrated = useAtomValue(isHydratedAtom);
+  const isAuthLoading = useAtomValue(isAuthLoadingAtom);
 
-  // Hydration 전에는 로그인 관련 메뉴 숨김 (깜빡임 방지)
-  const showAuthMenu = isHydrated && isLoggedIn;
+  // 인증 확인 중에는 로그인 관련 메뉴 숨김 (깜빡임 방지)
+  const showAuthMenu = !isAuthLoading && isLoggedIn;
 
   return (
     <nav className="text-white">
