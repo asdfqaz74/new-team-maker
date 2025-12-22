@@ -4,6 +4,7 @@ import { useSnackbar } from "@/hooks/useSnackbar";
 import { isLoggedInAtom } from "@/store/user.store";
 import { useAtomValue } from "jotai";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type ChooseBoxProps = {
   type: "select" | "ai";
@@ -27,6 +28,7 @@ const boxType: Record<
 
 const ChooseBox = ({ type }: ChooseBoxProps) => {
   const isLoggedIn = useAtomValue(isLoggedInAtom);
+  const router = useRouter();
 
   const { info } = useSnackbar();
   const { title, desc, desc2 } = boxType[type];
@@ -38,6 +40,12 @@ const ChooseBox = ({ type }: ChooseBoxProps) => {
     }
 
     await localStorage.setItem("teamMakerType", type);
+    if (type === "select") {
+      router.push("/team-maker/select/step2");
+    }
+    if (type === "ai") {
+      router.push("/team-maker/ai/step2");
+    }
   };
 
   return (

@@ -13,21 +13,23 @@ const Nav = () => {
   const showAuthMenu = !isAuthLoading && isLoggedIn;
   const path = usePathname();
 
-  const currentPath = path || "/";
+  const isActive = (target: string) => {
+    return path === target || path.startsWith(`${target}/`);
+  };
 
   return (
     <nav className="text-white">
       <ul className="flex gap-8 text-2xl font-bold">
         <li
           className={`hover-underline-animation cursor-pointer ${
-            currentPath === "/" ? "active-link" : ""
+            isActive("/") ? "active-link" : ""
           }`}
         >
           <Link href="/">홈</Link>
         </li>
         <li
           className={`hover-underline-animation cursor-pointer ${
-            currentPath === "/team-maker" ? "active-link" : ""
+            isActive("/team-maker") ? "active-link" : ""
           }`}
         >
           <Link href="/team-maker">팀메이커</Link>
@@ -35,7 +37,7 @@ const Nav = () => {
         {showAuthMenu && (
           <li
             className={`hover-underline-animation cursor-pointer ${
-              currentPath === "/statistics" ? "active-link" : ""
+              isActive("/statistics") ? "active-link" : ""
             }`}
           >
             <Link href="">통계</Link>
@@ -43,21 +45,21 @@ const Nav = () => {
         )}
         <li
           className={`hover-underline-animation cursor-pointer ${
-            currentPath === "/news" ? "active-link" : ""
+            isActive("/news") ? "active-link" : ""
           }`}
         >
           <Link href="">뉴스</Link>
         </li>
         <li
           className={`hover-underline-animation cursor-pointer ${
-            currentPath === "/patch-notes" ? "active-link" : ""
+            isActive("/patch-notes") ? "active-link" : ""
           }`}
         >
           <Link href="">패치노트</Link>
         </li>
         <li
           className={`hover-underline-animation cursor-pointer ${
-            currentPath === "/contact" ? "active-link" : ""
+            isActive("/contact") ? "active-link" : ""
           }`}
         >
           <Link href="">문의</Link>
@@ -65,7 +67,7 @@ const Nav = () => {
         {showAuthMenu && (
           <li
             className={`hover-underline-animation cursor-pointer ${
-              currentPath === "/my-page" ? "active-link" : ""
+              isActive("/my-page") ? "active-link" : ""
             }`}
           >
             <Link href="">마이페이지</Link>

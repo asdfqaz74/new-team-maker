@@ -15,7 +15,7 @@ const Header = () => {
   }
 
   return (
-    <header className="flex items-center justify-between px-8">
+    <header className="flex items-center justify-between px-8 py-4">
       <Link href="/" aria-label="홈으로 이동">
         <Image src={"/image/logo.png"} alt="팀메이커" width={90} height={90} />
       </Link>

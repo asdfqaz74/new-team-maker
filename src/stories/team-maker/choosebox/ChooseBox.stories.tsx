@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import ChooseBox from "@/components/team-maker/choosebox/ChooseBox";
+import ChooseBox from "@/components/team-maker/ChooseBox";
 
 const meta = {
   title: "TeamMaker/ChooseBox",
