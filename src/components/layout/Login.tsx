@@ -1,34 +1,45 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
+import { AxiosError } from "axios";
 import { logout } from "@/api/user.api";
 import { useSnackbar } from "@/hooks/useSnackbar";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   isLoggedInAtom,
   userInfoAtom,
   isAuthLoadingAtom,
 } from "@/store/user.store";
-import { AxiosError } from "axios";
-import { useAtomValue, useSetAtom } from "jotai";
-import Image from "next/image";
-import Link from "next/link";
 
 const Login = () => {
+  /* -------------------------------------------- */
+  /*                     상태관리                     */
+  /* -------------------------------------------- */
   const userInfo = useAtomValue(userInfoAtom);
+  const setUserInfo = useSetAtom(userInfoAtom);
   const isLoggedIn = useAtomValue(isLoggedInAtom);
   const isAuthLoading = useAtomValue(isAuthLoadingAtom);
 
-  const setUserInfo = useSetAtom(userInfoAtom);
-
+  /* -------------------------------------------- */
+  /*                    커스텀훅 사용                   */
+  /* -------------------------------------------- */
   const { success, error: showError } = useSnackbar();
 
-  // 인증 확인 중에는 기본 상태(비로그인)로 표시
+  /* -------------------------------------------- */
+  /*                     기본설정                     */
+  /* -------------------------------------------- */
   const showLoggedIn = !isAuthLoading && isLoggedIn;
   const userName = userInfo?.realName ?? "Guest";
 
+  /* -------------------------------------------- */
+  /*                    이벤트 핸들러                   */
+  /* -------------------------------------------- */
   const handleLogout = async () => {
     try {
       await logout();
       setUserInfo(null);
+
       success("로그아웃 되었습니다.");
     } catch (err) {
       const error = err as AxiosError<ApiErrorResponse>;

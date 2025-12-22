@@ -16,11 +16,20 @@ type SignInForm = {
 };
 
 const SignIn = () => {
+  /* -------------------------------------------- */
+  /*                     상태관리                     */
+  /* -------------------------------------------- */
   const setUserInfo = useSetAtom(userInfoAtom);
   const setAuthLoading = useSetAtom(isAuthLoadingAtom);
 
+  /* -------------------------------------------- */
+  /*                    커스텀훅 사용                   */
+  /* -------------------------------------------- */
   const { success, error: showError } = useSnackbar();
 
+  /* -------------------------------------------- */
+  /*                     기본설정                     */
+  /* -------------------------------------------- */
   const router = useRouter();
 
   const {
@@ -28,7 +37,9 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
   } = useForm<SignInForm>({ mode: "onChange" });
-
+  /* -------------------------------------------- */
+  /*                    이벤트 핸들러                   */
+  /* -------------------------------------------- */
   const onSubmit = async (data: SignInForm) => {
     try {
       const response = await login(data);
@@ -79,7 +90,7 @@ const SignIn = () => {
           className={`mt-2 px-4 py-2 text-white font-bold rounded-lg transition-colors ${
             !isValid || isSubmitting
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
+              : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
           }`}
         >
           {isSubmitting ? "로그인 중..." : "로그인"}
