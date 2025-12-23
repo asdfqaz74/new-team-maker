@@ -18,8 +18,8 @@ const Nav = () => {
   };
 
   return (
-    <nav className="text-white">
-      <ul className="flex gap-8 text-2xl font-bold">
+    <nav className="text-white text-lg md:text-2xl text-nowrap">
+      <ul className="flex gap-8 font-bold">
         <li
           className={`hover-underline-animation cursor-pointer ${
             isActive("/") ? "active-link" : ""
@@ -50,29 +50,6 @@ const Nav = () => {
         >
           <Link href="">뉴스</Link>
         </li>
-        <li
-          className={`hover-underline-animation cursor-pointer ${
-            isActive("/patch-notes") ? "active-link" : ""
-          }`}
-        >
-          <Link href="">패치노트</Link>
-        </li>
-        <li
-          className={`hover-underline-animation cursor-pointer ${
-            isActive("/contact") ? "active-link" : ""
-          }`}
-        >
-          <Link href="">문의</Link>
-        </li>
-        {showAuthMenu && (
-          <li
-            className={`hover-underline-animation cursor-pointer ${
-              isActive("/my-page") ? "active-link" : ""
-            }`}
-          >
-            <Link href="">마이페이지</Link>
-          </li>
-        )}
       </ul>
     </nav>
   );

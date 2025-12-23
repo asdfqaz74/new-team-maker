@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import Nav from "../components/layout/Nav";
+import Nav from "../components/menu/desktop/Nav";
 import { useHydrateAtoms } from "jotai/utils";
 import { userInfoAtom } from "@/store/user.store";
 import { LoginInfoItem } from "@/types/user";

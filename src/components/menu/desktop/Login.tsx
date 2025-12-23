@@ -50,8 +50,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center text-white">
-      <span className="mr-4">
+    <div className="flex items-center text-white text-nowrap">
+      <span className="mr-4 text-sm">
         {showLoggedIn ? (
           <>
             <span className="font-bold">{userName}</span>님, 환영합니다.
