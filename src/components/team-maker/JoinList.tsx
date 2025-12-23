@@ -14,7 +14,7 @@ const JoinList = () => {
   };
 
   return (
-    <div className="border p-4 w-80 md:w-96">
+    <div className="border py-4 px-8 w-80 md:w-96">
       <p className="text-2xl text-center font-bold mb-10">
         참가명단 [ {playerCount} / 10 ]
       </p>
