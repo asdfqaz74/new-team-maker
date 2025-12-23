@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import ParticipantPlayer from "@/components/team-maker/ParticipantPlayer";
+import ParticipantPlayer from "@/components/team-maker/WaitingList";
 
 const meta = {
   title: "TeamMaker/ParticipantPlayer",
