@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import FormInput from "./FormInput";
 import { useSnackbar } from "@/hooks/useSnackbar";
+import { useResetGameState } from "@/hooks/useResetGameState";
 import { login } from "@/api/user.api";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -26,6 +27,7 @@ const SignIn = () => {
   /*                    커스텀훅 사용                   */
   /* -------------------------------------------- */
   const { success, error: showError } = useSnackbar();
+  const { resetGameState } = useResetGameState();
 
   /* -------------------------------------------- */
   /*                     기본설정                     */
@@ -46,6 +48,7 @@ const SignIn = () => {
       const userInfo = response.data;
 
       if (userInfo) {
+        resetGameState(); // 기존 게임 상태 초기화
         setUserInfo(userInfo);
         setAuthLoading(false); // 인증 완료 표시
         success("로그인에 성공했습니다!");

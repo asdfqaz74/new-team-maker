@@ -89,23 +89,21 @@ const AddPlayer = ({ isLogin }: AddPlayerProps) => {
     if (!selectedPlayer) return;
 
     // 이미 추가된 플레이어인지 확인
-    const currentPlayers = loginPlayers?.value || [];
+    const currentPlayers = loginPlayers || [];
     if (currentPlayers.some((p) => p.id === selectedPlayer._id)) {
       showError("이미 추가된 플레이어입니다.");
       return;
     }
 
-    setLoginPlayers((prev) => ({
-      value: [
-        ...(prev?.value || []),
-        { id: selectedPlayer._id, name: selectedPlayer.realName },
-      ],
-    }));
+    setLoginPlayers((prev) => [
+      ...(prev || []),
+      { id: selectedPlayer._id, name: selectedPlayer.realName },
+    ]);
     success("플레이어가 추가되었습니다!");
     setSelectedPlayerId("");
   };
 
-  const loginPlayerCount = loginPlayers?.value?.length || 0;
+  const loginPlayerCount = loginPlayers?.length || 0;
 
   /* -------------------------------------------- */
   /*                   로그인 사용자 UI                  */

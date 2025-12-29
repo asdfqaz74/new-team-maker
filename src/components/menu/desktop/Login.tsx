@@ -5,12 +5,14 @@ import Image from "next/image";
 import { AxiosError } from "axios";
 import { logout } from "@/api/user.api";
 import { useSnackbar } from "@/hooks/useSnackbar";
+import { useResetGameState } from "@/hooks/useResetGameState";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   isLoggedInAtom,
   userInfoAtom,
   isAuthLoadingAtom,
 } from "@/store/user.store";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   /* -------------------------------------------- */
@@ -25,12 +27,14 @@ const Login = () => {
   /*                    커스텀훅 사용                   */
   /* -------------------------------------------- */
   const { success, error: showError } = useSnackbar();
+  const { resetGameState } = useResetGameState();
 
   /* -------------------------------------------- */
   /*                     기본설정                     */
   /* -------------------------------------------- */
   const showLoggedIn = !isAuthLoading && isLoggedIn;
   const userName = userInfo?.realName ?? "Guest";
+  const router = useRouter();
 
   /* -------------------------------------------- */
   /*                    이벤트 핸들러                   */
@@ -39,6 +43,8 @@ const Login = () => {
     try {
       await logout();
       setUserInfo(null);
+      resetGameState(); // 게임 상태 초기화
+      router.push("/");
 
       success("로그아웃 되었습니다.");
     } catch (err) {

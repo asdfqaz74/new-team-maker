@@ -1,17 +1,24 @@
 import { useSnackbar } from "@/hooks/useSnackbar";
 import { playersAtom, sessionPlayersAtom } from "@/store/player.store";
+import { isLoggedInAtom } from "@/store/user.store";
 import { ParticipantPlayer } from "@/types/team-maker";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import Image from "next/image";
 
 const PlayerGroup = ({ players }: { players: ParticipantPlayer[] }) => {
   const { error: showError } = useSnackbar();
 
   const setPlayerList = useSetAtom(playersAtom);
+  const isLogin = useAtomValue(isLoggedInAtom);
   const [sessionPlayers, setSessionPlayers] = useAtom(sessionPlayersAtom);
 
   const sessionPlayersLength = sessionPlayers.length;
 
+  /* -------------------------------------------- */
+  /*                    이벤트 핸들러                   */
+  /* -------------------------------------------- */
+
+  // 대기명단에서 플레이어 삭제 버튼
   const handleRemovePlayerButton = (playerId: string) => {
     setPlayerList((prev) => {
       if (!prev) return null;
@@ -26,15 +33,17 @@ const PlayerGroup = ({ players }: { players: ParticipantPlayer[] }) => {
     );
   };
 
+  // 참가명단에 플레이어 추가 버튼
   const handleAddPlayer = (player: ParticipantPlayer) => {
-    if (sessionPlayersLength >= 10) {
-      showError("참가명단은 최대 10명까지 추가할 수 있습니다.");
-      return;
-    }
-
     setSessionPlayers((prev) => {
+      // 참가명단 최대 인원수 체크
+      if (sessionPlayersLength >= 10) {
+        showError("참가명단은 최대 10명까지 추가할 수 있습니다.");
+        return prev;
+      }
+
       // 중복 추가 방지
-      if (prev.find((p) => p.id === player.id)) {
+      if (prev.some((p) => p.id === player.id)) {
         showError("이미 참가명단에 추가된 플레이어입니다.");
         return prev;
       }

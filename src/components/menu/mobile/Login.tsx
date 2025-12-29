@@ -4,12 +4,14 @@ import Link from "next/link";
 import { AxiosError } from "axios";
 import { logout } from "@/api/user.api";
 import { useSnackbar } from "@/hooks/useSnackbar";
+import { useResetGameState } from "@/hooks/useResetGameState";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   isLoggedInAtom,
   userInfoAtom,
   isAuthLoadingAtom,
 } from "@/store/user.store";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const userInfo = useAtomValue(userInfoAtom);
@@ -18,14 +20,19 @@ const Login = () => {
   const isAuthLoading = useAtomValue(isAuthLoadingAtom);
 
   const { success, error: showError } = useSnackbar();
+  const { resetGameState } = useResetGameState();
 
   const showLoggedIn = !isAuthLoading && isLoggedIn;
   const userName = userInfo?.realName ?? "Guest";
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
       await logout();
       setUserInfo(null);
+      resetGameState(); // 게임 상태 초기화
+      router.push("/");
+
       success("로그아웃 되었습니다.");
     } catch (err) {
       const error = err as AxiosError<ApiErrorResponse>;

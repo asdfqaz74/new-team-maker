@@ -2,13 +2,20 @@
 
 import { useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
-import { playersAtom, isPlayersHydratedAtom } from "@/store/player.store";
+import {
+  playersAtom,
+  isPlayersHydratedAtom,
+  loginPlayersAtom,
+} from "@/store/player.store";
 import PlayerGroup from "./PlayerGroup";
+import { isLoggedInAtom } from "@/store/user.store";
 
 const ParticipantPlayer = () => {
-  const playerList = useAtomValue(playersAtom);
+  const playerList = useAtomValue(playersAtom); // 비로그인 플레이어 목록
+  const loginPlayerList = useAtomValue(loginPlayersAtom); // 로그인 플레이어 목록
   const isHydrated = useAtomValue(isPlayersHydratedAtom);
   const setIsHydrated = useSetAtom(isPlayersHydratedAtom);
+  const isLogin = useAtomValue(isLoggedInAtom);
 
   // 클라이언트 마운트 후 hydration 완료 표시
   useEffect(() => {
@@ -16,7 +23,12 @@ const ParticipantPlayer = () => {
   }, [setIsHydrated]);
 
   // 플레이어를 절반으로 나누기
-  const currentPlayers = playerList?.value || [];
+  let currentPlayers = [];
+  if (isLogin) {
+    currentPlayers = loginPlayerList || [];
+  } else {
+    currentPlayers = playerList?.value || [];
+  }
   const firstGroup = currentPlayers.slice(0, 10);
   const secondGroup = currentPlayers.slice(10, 15);
 
