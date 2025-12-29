@@ -22,6 +22,8 @@ const ParticipantPlayer = () => {
     setIsHydrated(true);
   }, [setIsHydrated]);
 
+  /* ------- console.log("대기명단", fetchW); ------- */
+
   // 플레이어를 절반으로 나누기
   let currentPlayers = [];
   if (isLogin) {

@@ -1,5 +1,6 @@
 import { LoginRequest, LoginResponse, SignUpRequest } from "@/types/user";
 import { api } from "./index";
+import { WaitingListResponse } from "@/types/team-maker";
 
 /* -------------------------------------------- */
 /*                      로그인                     */
@@ -22,3 +23,9 @@ export const me = () => api.get<LoginResponse>("/users/me");
 /* -------------------------------------------- */
 export const signup = (data: SignUpRequest) =>
   api.post("/users/register", data);
+
+/* -------------------------------------------- */
+/*                   대기명단 불러오기                  */
+/* -------------------------------------------- */
+export const getWaitingList = () =>
+  api.get<WaitingListResponse>("/users/wait-players");
