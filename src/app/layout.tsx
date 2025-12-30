@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
   title: {
     default: "팀메이커",
-    template: "%s | 팀메이커",
+    template: "팀메이커 | %s",
   },
   description:
     "리그오브레전드 내전 팀을 자동으로 구성해주는 팀메이커. 포지션, 실력, 승률을 고려한 공정한 팀 매칭을 제공합니다.",
