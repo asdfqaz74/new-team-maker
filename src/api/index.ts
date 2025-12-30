@@ -1,15 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-// API 기본 URL 설정
-// 프로덕션: 환경 변수에서 API 서버 주소 사용
-// 개발: Next.js rewrites로 프록시 (/api)
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== "undefined" ? "/api" : "");
-
 // Axios 인스턴스 생성
+// Next.js rewrites를 통해 /api -> API 서버로 프록시됨 (CORS 우회)
 const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: "/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
