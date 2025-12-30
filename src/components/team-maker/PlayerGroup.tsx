@@ -1,16 +1,26 @@
+import { deleteWaitingPlayer } from "@/api/team-maker.api";
 import { useSnackbar } from "@/hooks/useSnackbar";
-import { playersAtom, sessionPlayersAtom } from "@/store/player.store";
+import {
+  loginPlayersAtom,
+  loginSessionPlayersAtom,
+  playersAtom,
+  sessionPlayersAtom,
+} from "@/store/player.store";
 import { isLoggedInAtom } from "@/store/user.store";
 import { ParticipantPlayer } from "@/types/team-maker";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import Image from "next/image";
 
 const PlayerGroup = ({ players }: { players: ParticipantPlayer[] }) => {
-  const { error: showError } = useSnackbar();
+  const { success, error: showError } = useSnackbar();
 
-  const setPlayerList = useSetAtom(playersAtom);
   const isLogin = useAtomValue(isLoggedInAtom);
-  const [sessionPlayers, setSessionPlayers] = useAtom(sessionPlayersAtom);
+
+  const setLoginPlayerList = useSetAtom(loginPlayersAtom);
+  const setGuestPlayerList = useSetAtom(playersAtom);
+  const [sessionPlayers, setSessionPlayers] = useAtom(
+    isLogin ? loginSessionPlayersAtom : sessionPlayersAtom
+  );
 
   const sessionPlayersLength = sessionPlayers.length;
 
@@ -19,14 +29,28 @@ const PlayerGroup = ({ players }: { players: ParticipantPlayer[] }) => {
   /* -------------------------------------------- */
 
   // 대기명단에서 플레이어 삭제 버튼
-  const handleRemovePlayerButton = (playerId: string) => {
-    setPlayerList((prev) => {
-      if (!prev) return null;
-      return {
-        ...prev,
-        value: prev.value.filter((player) => player.id !== playerId),
-      };
-    });
+  const handleRemovePlayerButton = async (playerId: string) => {
+    if (isLogin) {
+      try {
+        await deleteWaitingPlayer({ playerId });
+        setLoginPlayerList((prev) => {
+          if (!prev) return null;
+          return prev.filter((player) => player.id !== playerId);
+        });
+        success("플레이어가 삭제되었습니다.");
+      } catch {
+        showError("플레이어 삭제에 실패했습니다.");
+        return;
+      }
+    } else {
+      setGuestPlayerList((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          value: prev.value.filter((player) => player.id !== playerId),
+        };
+      });
+    }
 
     setSessionPlayers((prev) =>
       prev.filter((player) => player.id !== playerId)

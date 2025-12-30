@@ -48,3 +48,63 @@ type PlayerListResponse = {
 export const getPlayerList = (playerIds: string[]) => {
   return api.post<PlayerListResponse>("/team-match/players", { playerIds });
 };
+
+/* -------------------------------------------- */
+/*                  대기목록 선수 추가                  */
+/* -------------------------------------------- */
+export interface AddWaitingPlayerRequest {
+  playerId: string;
+  playerName: string;
+}
+
+export interface AddWaitingPlayerItem {
+  id: string;
+  name: string;
+}
+
+export type AddWaitingResponse = {
+  success: boolean;
+  message: string;
+  data?: AddWaitingPlayerItem[];
+};
+
+export const addWaitingPlayer = (body: AddWaitingPlayerRequest) => {
+  return api.post<AddWaitingResponse>("/users/wait-players", body);
+};
+
+/* -------------------------------------------- */
+/*                  대기목록 선수 삭제                  */
+/* -------------------------------------------- */
+export interface DeleteWaitPlayerParams {
+  playerId: string;
+}
+
+export interface DeleteWaitingPlayerItem {
+  id: string;
+  name: string;
+}
+
+export type DeleteWaitingResponse = {
+  success: boolean;
+  message: string;
+  data?: DeleteWaitingPlayerItem[];
+};
+
+export const deleteWaitingPlayer = (params: DeleteWaitPlayerParams) => {
+  return api.delete<DeleteWaitingResponse>(
+    `/users/wait-players/${params.playerId}`
+  );
+};
+
+/* -------------------------------------------- */
+/*                  대기목록 선수 조회                  */
+/* -------------------------------------------- */
+export type GetWaitingPlayersResponse = {
+  success: boolean;
+  message: string;
+  data: AddWaitingPlayerItem[];
+};
+
+export const getWaitingPlayers = () => {
+  return api.get<GetWaitingPlayersResponse>("/users/wait-players");
+};

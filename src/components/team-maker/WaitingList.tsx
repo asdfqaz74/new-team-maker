@@ -1,6 +1,6 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 import {
   playersAtom,
@@ -8,21 +8,38 @@ import {
   loginPlayersAtom,
 } from "@/store/player.store";
 import PlayerGroup from "./PlayerGroup";
-import { isLoggedInAtom } from "@/store/user.store";
+import { isAuthLoadingAtom, isLoggedInAtom } from "@/store/user.store";
+import { getWaitingPlayers } from "@/api/team-maker.api";
 
 const ParticipantPlayer = () => {
   const playerList = useAtomValue(playersAtom); // 비로그인 플레이어 목록
-  const loginPlayerList = useAtomValue(loginPlayersAtom); // 로그인 플레이어 목록
+  const [loginPlayerList, setLoginPlayerList] = useAtom(loginPlayersAtom); // 로그인 플레이어 목록
   const isHydrated = useAtomValue(isPlayersHydratedAtom);
   const setIsHydrated = useSetAtom(isPlayersHydratedAtom);
   const isLogin = useAtomValue(isLoggedInAtom);
+  const isAuthLoading = useAtomValue(isAuthLoadingAtom);
 
   // 클라이언트 마운트 후 hydration 완료 표시
   useEffect(() => {
     setIsHydrated(true);
   }, [setIsHydrated]);
 
-  /* ------- console.log("대기명단", fetchW); ------- */
+  /* -------------------------------------------- */
+  /*                     초기렌더링                    */
+  /* -------------------------------------------- */
+
+  useEffect(() => {
+    const response = async () => {
+      if (isLogin) {
+        // 로그인 상태면 명단 api 불러오기
+        getWaitingPlayers().then((response) => {
+          const waitingPlayersList = response.data ?? [];
+          setLoginPlayerList(waitingPlayersList);
+        });
+      }
+    };
+    response();
+  }, [isLogin, setLoginPlayerList]);
 
   // 플레이어를 절반으로 나누기
   let currentPlayers = [];
@@ -34,8 +51,8 @@ const ParticipantPlayer = () => {
   const firstGroup = currentPlayers.slice(0, 10);
   const secondGroup = currentPlayers.slice(10, 15);
 
-  // 아직 hydration 안됐으면 로딩 표시
-  if (!isHydrated) {
+  // 아직 hydration 또는 인증 로딩 중이면 로딩 표시
+  if (!isHydrated || isAuthLoading) {
     return (
       <div className="border p-4 w-80 md:w-96 text-center">불러오는 중...</div>
     );

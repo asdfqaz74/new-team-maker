@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { loginPlayersAtom, playersAtom } from "@/store/player.store";
 import Image from "next/image";
 import { v4 } from "uuid";
-import { getSimplePlayersList } from "@/api/team-maker.api";
+import { addWaitingPlayer, getSimplePlayersList } from "@/api/team-maker.api";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
@@ -82,25 +82,43 @@ const AddPlayer = ({ isLogin }: AddPlayerProps) => {
     fetchPlayers();
   }, [isLogin]);
 
-  const handleAddLoginPlayer = () => {
+  const handleAddLoginPlayer = async () => {
     if (!selectedPlayerId) return;
 
-    const selectedPlayer = playersList.find((p) => p._id === selectedPlayerId);
-    if (!selectedPlayer) return;
+    try {
+      const selectedPlayer = playersList.find(
+        (p) => p._id === selectedPlayerId
+      );
+      if (!selectedPlayer) return;
 
-    // 이미 추가된 플레이어인지 확인
-    const currentPlayers = loginPlayers || [];
-    if (currentPlayers.some((p) => p.id === selectedPlayer._id)) {
-      showError("이미 추가된 플레이어입니다.");
-      return;
+      // 이미 추가된 플레이어인지 확인
+      const currentPlayers = loginPlayers || [];
+      if (currentPlayers.some((p) => p.id === selectedPlayer._id)) {
+        showError("이미 추가된 플레이어입니다.");
+        return;
+      }
+
+      setLoginPlayers((prev) => [
+        ...(prev || []),
+        { id: selectedPlayer._id, name: selectedPlayer.realName },
+      ]);
+
+      const body = {
+        playerId: selectedPlayer._id,
+        playerName: selectedPlayer.realName,
+      };
+
+      await addWaitingPlayer(body);
+      success("플레이어가 추가되었습니다!");
+      setSelectedPlayerId("");
+    } catch (err) {
+      const error = err as AxiosError<ApiErrorResponse>;
+      console.error(error.response?.data.error.code);
+      showError(
+        error.response?.data?.error?.message ||
+          "플레이어 추가에 실패했습니다. 다시 시도해주세요."
+      );
     }
-
-    setLoginPlayers((prev) => [
-      ...(prev || []),
-      { id: selectedPlayer._id, name: selectedPlayer.realName },
-    ]);
-    success("플레이어가 추가되었습니다!");
-    setSelectedPlayerId("");
   };
 
   const loginPlayerCount = loginPlayers?.length || 0;
