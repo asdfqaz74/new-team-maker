@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { LoginInfoItem } from "@/types/user";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+// 서버 사이드에서는 직접 API 서버 호출 (rewrites 사용 불가)
+const API_BASE_URL = process.env.API_PROXY_TARGET || "http://localhost:3001";
 
 // 서버 사이드에서 인증 확인
 export async function getServerAuth(): Promise<LoginInfoItem | null> {
@@ -13,7 +14,7 @@ export async function getServerAuth(): Promise<LoginInfoItem | null> {
       return null;
     }
 
-    const response = await fetch(`${API_BASE_URL}/users/me`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/me`, {
       headers: {
         Cookie: cookieHeader,
       },

@@ -6,8 +6,8 @@ import {
 
 // 가장 많이 픽된 챔피언 통계 조회
 export const getMostPickedChampionStats = () =>
-  api.get<MostPickedChampionStatResponse>("/api/statics/most-picked");
+  api.get<MostPickedChampionStatResponse>("/statics/most-picked");
 
 // 나머지 통계 조회
 export const getOtherStats = () =>
-  api.get<HighestWinRateChampionsByPositionData>("/api/statics/other");
+  api.get<HighestWinRateChampionsByPositionData>("/statics/other");

@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 // Axios 인스턴스 생성
 // Next.js rewrites를 통해 /api -> API 서버로 프록시됨 (CORS 우회)
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: "/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
