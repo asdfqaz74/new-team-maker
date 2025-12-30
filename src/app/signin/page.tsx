@@ -4,16 +4,7 @@ import Link from "next/link";
 
 const Signin = () => {
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center">
-      {/* 배경이미지 */}
-      <Image
-        src="/image/login_bg.webp"
-        alt=""
-        fill
-        priority
-        className="object-cover -z-10"
-      />
-
+    <div className="relative min-h-screen w-full flex items-center justify-center h-screen bg-cover bg-center bg-no-repeat bg-(image:--bg-login)">
       {/* 돌아가기 */}
       <div className="absolute top-5 left-5">
         <Link

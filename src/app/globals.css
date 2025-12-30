@@ -66,3 +66,8 @@ body {
     transform-origin: left;
   }
 }
+
+@theme {
+  --bg-login: url("/image/login_bg.webp");
+  --bg-signup: url("/image/signup_bg.jpg");
+}
