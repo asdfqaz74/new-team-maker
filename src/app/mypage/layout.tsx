@@ -2,9 +2,9 @@ import Aside from "@/components/layout/Aside";
 
 const MyPageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="min-h-screen bg-bg-login bg-cover flex">
+    <div className="py-20 px-10 flex w-full">
       <Aside />
-      {children}
+      <div className="bg-amber-900 w-full p-10 ml-10">{children}</div>
     </div>
   );
 };
