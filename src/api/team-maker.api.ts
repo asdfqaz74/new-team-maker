@@ -20,7 +20,7 @@ type PlayersListResponse = {
 
 // 선수 목록 조회 (간단)
 export const getSimplePlayersList = () =>
-  api.get<PlayersListResponse>("/players/list");
+  api.get<PlayersListResponse>("/api/players/list");
 
 export interface PlayersListItem {
   playerId: string;
@@ -46,7 +46,7 @@ type PlayerListResponse = {
 
 // 선수 조회 (리스트 response)
 export const getPlayerList = (playerIds: string[]) => {
-  return api.post<PlayerListResponse>("/team-match/players", { playerIds });
+  return api.post<PlayerListResponse>("/api/team-match/players", { playerIds });
 };
 
 /* -------------------------------------------- */
@@ -69,7 +69,7 @@ export type AddWaitingResponse = {
 };
 
 export const addWaitingPlayer = (body: AddWaitingPlayerRequest) => {
-  return api.post<AddWaitingResponse>("/users/wait-players", body);
+  return api.post<AddWaitingResponse>("/api/users/wait-players", body);
 };
 
 /* -------------------------------------------- */
@@ -92,7 +92,7 @@ export type DeleteWaitingResponse = {
 
 export const deleteWaitingPlayer = (params: DeleteWaitPlayerParams) => {
   return api.delete<DeleteWaitingResponse>(
-    `/users/wait-players/${params.playerId}`
+    `/api/users/wait-players/${params.playerId}`
   );
 };
 
@@ -106,5 +106,5 @@ export type GetWaitingPlayersResponse = {
 };
 
 export const getWaitingPlayers = () => {
-  return api.get<GetWaitingPlayersResponse>("/users/wait-players");
+  return api.get<GetWaitingPlayersResponse>("/api/users/wait-players");
 };
