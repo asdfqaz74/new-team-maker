@@ -1,21 +1,10 @@
 import type { NextConfig } from "next";
 
-const apiProxyTarget = process.env.API_PROXY_TARGET;
-
 const nextConfig: NextConfig = {
+  output: "export", // 정적 HTML로 내보내기
   productionBrowserSourceMaps: false,
-  async rewrites() {
-    // API_PROXY_TARGET이 설정되지 않으면 rewrites 비활성화
-    if (!apiProxyTarget) {
-      return [];
-    }
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${apiProxyTarget}/api/:path*`,
-      },
-    ];
-  },
+  // 정적 내보내기에서는 rewrites 사용 불가
+  // API는 클라이언트에서 직접 호출하거나 환경 변수로 설정
 };
 
 export default nextConfig;
