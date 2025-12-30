@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "team-maker",
+  "compatibility_date": "2025-12-30",
+  "assets": {
+    "directory": "./out"
+  }
+}
