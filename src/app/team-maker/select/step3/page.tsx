@@ -17,9 +17,9 @@ import { isLoggedInAtom } from "@/store/user.store";
 import { AxiosError } from "axios";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
-const SelectStep3 = () => {
+const SelectStep3Content = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const phase = searchParams.get("phase") || "select";
@@ -162,6 +162,20 @@ const SelectStep3 = () => {
         </>
       )}
     </div>
+  );
+};
+
+const SelectStep3 = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center my-20">
+          불러오는 중...
+        </div>
+      }
+    >
+      <SelectStep3Content />
+    </Suspense>
   );
 };
 
