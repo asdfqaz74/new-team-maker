@@ -69,7 +69,7 @@ const Login = () => {
       <div className="flex justify-center items-center gap-4">
         {showLoggedIn && (
           <Link
-            href=""
+            href="/mypage"
             aria-label="마이페이지로 이동"
             className="interactive-scale"
           >
