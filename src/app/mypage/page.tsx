@@ -1,5 +1,17 @@
+"use client";
+
+import MyInfo from "@/components/mypage/MyInfo";
+import RegisterPlayer from "@/components/mypage/RegisterPlayer";
+
 const MyPage = () => {
-  return <div>My Page 테스트 테스트</div>;
+  return (
+    <div className="flex">
+      <div className="flex flex-col justify-between">
+        <MyInfo />
+        <RegisterPlayer />
+      </div>
+    </div>
+  );
 };
 
 export default MyPage;
