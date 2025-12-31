@@ -2,9 +2,11 @@
 
 import { Provider } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Snackbar from "@/components/common/Snackbar";
 import { userInfoAtom, isAuthLoadingAtom } from "@/store/user.store";
 import { LoginInfoItem } from "@/types/user";
+import { useState } from "react";
 
 type ClientProviderProps = {
   children: React.ReactNode;
@@ -27,13 +29,17 @@ const HydrateAtoms = ({
 };
 
 const ClientProvider = ({ children, initialUser }: ClientProviderProps) => {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <Provider>
-      <HydrateAtoms initialUser={initialUser}>
-        {children}
-        <Snackbar />
-      </HydrateAtoms>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider>
+        <HydrateAtoms initialUser={initialUser}>
+          {children}
+          <Snackbar />
+        </HydrateAtoms>
+      </Provider>
+    </QueryClientProvider>
   );
 };
 
